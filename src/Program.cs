@@ -2,6 +2,9 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Threading;
+using PlayerNS;
+using DeckNS;
+using RulesNS;
 
 namespace src
 {
@@ -12,7 +15,7 @@ namespace src
             Config config = new Config(); //set Configs
 
             // Boas vindas
-            Console.WriteLine($"===Uno Console v0.01===");
+            Console.WriteLine($"===Uno Console v0.0.2===");
             Console.WriteLine("Jogadores:");
             foreach(string playersShow in args) { //Mostrar jogadores
                 Console.WriteLine(playersShow);
@@ -204,120 +207,6 @@ namespace src
             Console.Title = "Uno Console by Luan Roger v0.01";
             Console.Beep();
         }
-    }
-
-    // Deck class
-    internal class Deck{
-        //Cartas e números
-        private int[] nunbCards = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        private string[] cardColor = new string[] {"Vermelho", "Amarelo", "Verde", "Azul", "Mudar cor"};
-
-        //Pegar uma carta
-        internal string takeCard(){
-            Random rand = new Random();
-            StringBuilder card = new StringBuilder();
-
-            int nCardNunb = rand.Next(0,10);
-            int nCardColorNunb = rand.Next(0, 5);
-
-            card.Append(nunbCards[nCardNunb]);
-            card.Append(cardColor[nCardColorNunb]);
-            if(nCardColorNunb == 4) { card.Remove(0, 1); } //Remover o número de "Mudar cor"
-
-            return Convert.ToString(card);
-        }
-    }
-
-    // Player class
-    internal class Player{
-        internal string name {get; set;}
-        internal List<string> hand = new List<string>();
-
-        internal static void seeHand(List<Player> players, int playingNow){
-                Console.WriteLine($"Cartas do {players[playingNow].name}:"); //Mostrar nome do player no momento
-                
-                foreach(string pCards in players[playingNow].hand) {
-                    Console.WriteLine(pCards);
-                }
-        }
-        internal static void playCard(string cardCode, List<Player> players, int pNow, int cPlayed){
-            //Tirar o numero, deixando apenas a cor
-            string processingCardCode = cardCode.Remove(0, 1); 
-            string lastCardPlayed = Rules.stack[Rules.stack.Count - 1].Remove(0, 1);
-
-             //Fazer a verificação para sabre se o número ou a cor da carta são iguais
-            if(processingCardCode == lastCardPlayed || cardCode.Substring(0,1) == Rules.stack[Rules.stack.Count - 1].Substring(0, 1) || cardCode == "Mudar cor"){
-                Rules.stack.Add(cardCode);//Adicionar a pilha de cartas
-                Console.WriteLine($"Você jogou: {players[pNow].hand[cPlayed]}");
-
-                players[pNow].hand.RemoveAt(cPlayed);//Remover da mão
-
-                if(cardCode == "Mudar cor"){
-                    Rules.stack.Add(Rules.chageColor());
-                }
-            }else{
-                Console.WriteLine("Está carta não pode ser jogada.");
-                Console.WriteLine("Você perdeu a vez.");
-            }
-        }
-    }
-
-    //Rule class
-    internal class Rules {
-        internal string[] playerOrder;
-        internal static List<string> stack = new List<string>(); //Historico de cartas jogadas
-
-        internal Rules(int playersAmount, List<Player> players){
-            playerOrder = new string[playersAmount];
-            for(int c = 0; c != playersAmount; c++){
-                playerOrder[c] = players[c].name;
-            }
-            
-            /*
-            *Preferi criar um novo Random ao inves de pergar do takeCard() pois não teria que remover o "+4" e "Mudar cor".
-            *Além de ter que instanciar Deck ou tornar takeCard() static.
-            */
-            Random random = new Random();
-            string[] cardColor = new string[] {"Vermelho", "Amarelo", "Verde", "Azul"};
-            int firstCard = random.Next(0, 4);
-            stack.Add("0" + cardColor[firstCard]);
-            /*"0" para que não ocorra problemas em playCard().
-            *Isto apenas para a primeira carta.
-            */
-        }
-        internal void showHistoric(){
-            Console.WriteLine($"Carta atual: {stack[stack.Count - 1]}");
-        }
-        internal static string chageColor(){
-            Console.WriteLine("Escolha a nova cor: ");
-            Console.WriteLine("[ 1 ] - Vermelho.    [ 2 ] - Amarelo.\n[ 3 ] - Verde.    [ 4 ] - Azul.");
-            int colorChoice = Convert.ToInt32(Console.ReadLine());
-            
-            switch(colorChoice){
-                case 1:
-                Console.WriteLine("Agora a nova cor é Vermelho.");
-                return "0Vermelho";
-
-                case 2:
-                Console.WriteLine("Agora a nova cor é Amarelo.");
-                return "0Amarelo";
-
-                case 3: 
-                Console.WriteLine("Agora a nova cor é Verde.");
-                return "0Verde";
-
-                case 4:
-                Console.WriteLine("Agora a nova cor é Azul.");
-                return "0Azul";
-
-                default:
-                Error error = new Error();
-                error.error4();
-                break;
-            }
-            return "error"; //return fora da conticional para que tenha um retorno string para o metodo.
-        }
-
     }
 
     // Error class
