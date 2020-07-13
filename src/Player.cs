@@ -4,15 +4,17 @@ using RulesNS;
 
 namespace PlayerNS{
     public class Player{
-        public string name {get; set;}
+        public string name {get; private set;}
+        public void SetName(string newName){ this.name = newName; }
         internal List<string> hand = new List<string>();
-
         public static void seeHand(List<Player> players, int playingNow){
-                Console.WriteLine($"Cartas do {players[playingNow].name}:"); //Mostrar nome do player no momento
+            Console.WriteLine($"Cartas do {players[playingNow].name}:"); //Mostrar nome do player no momento
                 
-                foreach(string pCards in players[playingNow].hand) {
-                    Console.WriteLine(pCards);
-                }
+            int cardNumb = 0;
+            foreach(string playedCards in players[playingNow].hand) {
+                Console.WriteLine($"[ {cardNumb} ] - {playedCards}");
+                cardNumb++;
+            }
         }
         public static void playCard(string cardCode, List<Player> players, int pNow, int cPlayed){
             //Tirar o numero, deixando apenas a cor
@@ -31,7 +33,7 @@ namespace PlayerNS{
                 }
             }else{
                 Console.WriteLine("Está carta não pode ser jogada.");
-                Console.WriteLine("Você perdeu a vez.");
+                return;
             }
         }
     }
