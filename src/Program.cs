@@ -5,6 +5,7 @@ using System.Threading;
 using PlayerNS;
 using DeckNS;
 using RulesNS;
+using ErrorNS;
 
 namespace src
 {
@@ -15,10 +16,13 @@ namespace src
             Config config = new Config(); //set Configs
 
             // Boas vindas
-            Console.WriteLine($"===Uno Console v0.0.3===");
+            Console.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+");
+            Console.WriteLine("+    Uno Project v1.0.0      +");
+            Console.WriteLine("+      por Luan Roger        +");
+            Console.WriteLine("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+");
             Console.WriteLine("Jogadores:");
             foreach(string playersShow in args) { //Mostrar jogadores
-                Console.WriteLine(playersShow);
+                Console.WriteLine(">" + playersShow);
             }
             
             // Verificar jogadores e mostrar posivel error
@@ -65,7 +69,7 @@ namespace src
             
 
             //Menu
-            Console.WriteLine("===Menu===");
+            Console.WriteLine("=+=+=+=+=+= Menu =+=+=+=+=+=+=+=+");
             Console.WriteLine("[ 1 ] - Começar.    [ 2 ] - Sair.");
             int menuChoice = Convert.ToInt32(Console.ReadLine());
             switch(menuChoice){
@@ -149,7 +153,9 @@ namespace src
             while(rules.IsWin(players, playingNow) == false){ //Jogo não acaba até alguem ficar sem carta
 
                 playingNow = rules.PlayerTime(players, playingNow);
+                Console.ForegroundColor = ConsoleColor.DarkBlue; //Mudar cor para destaque
                 Console.WriteLine($"Agora: {rules.playerOrder[playingNow]}");
+                Console.ForegroundColor = ConsoleColor.Black;
 
                 rules.showHistoric(); //Mostrar carta atual.
                 
@@ -194,29 +200,6 @@ namespace src
         internal Config() {
             Console.Title = "Uno Console por Luan Roger v0.0.3";
             Console.Beep();
-        }
-    }
-
-    // Error class
-    internal class Error{
-        internal Error() { // Texto vermlho
-            Console.ForegroundColor = ConsoleColor.Red;
-        }
-        internal void error1() {
-            Console.WriteLine("Para começar a jogar você precisa pasar o nome dos jogadores como argumento.");
-            Environment.Exit(1);
-        }
-        internal void error2(){
-            Console.WriteLine("São suportados somente 4 jogadores.");
-            Environment.Exit(2);
-        }
-        internal void error3() {
-            Console.WriteLine("Jogadores insufucientes, minimo 2");
-            Environment.Exit(3);
-        }
-        internal void error4(){
-            Console.WriteLine("Valor inválido.");
-            Environment.Exit(4);
         }
     }
 }

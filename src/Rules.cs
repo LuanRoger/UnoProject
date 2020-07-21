@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using PlayerNS;
-using src; //Remover
+using System.Threading;
+using ErrorNS;
 
 namespace RulesNS{
     internal class Rules {
@@ -26,7 +27,11 @@ namespace RulesNS{
             *Isto apenas para a primeira carta.
             */
         }
-        internal void showHistoric(){ Console.WriteLine($"Carta atual: {stack[stack.Count - 1]}"); }
+        internal void showHistoric() {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"Carta atual: {stack[stack.Count - 1]}");
+            Console.ForegroundColor = ConsoleColor.Black;
+            }
         internal static string chageColor(){
             Console.WriteLine("Escolha a nova cor: ");
             Console.WriteLine("[ 1 ] - Vermelho. [ 2 ] - Amarelo.\n[ 3 ] - Verde.    [ 4 ] - Azul.");
@@ -35,18 +40,22 @@ namespace RulesNS{
             switch(colorChoice){
                 case 1:
                 Console.WriteLine("Agora a nova cor é Vermelho.");
+                Thread.Sleep(1200);
                 return "0Vermelho";
 
                 case 2:
                 Console.WriteLine("Agora a nova cor é Amarelo.");
+                Thread.Sleep(1200);
                 return "0Amarelo";
 
                 case 3: 
                 Console.WriteLine("Agora a nova cor é Verde.");
+                Thread.Sleep(1200);
                 return "0Verde";
 
                 case 4:
                 Console.WriteLine("Agora a nova cor é Azul.");
+                Thread.Sleep(1200);
                 return "0Azul";
 
                 default:
