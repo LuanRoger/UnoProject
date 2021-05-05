@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "UnoProject": {
+      "commandName": "Project",
+      "commandLineArgs": "Roger Rian"
+    }
+  }
+}
