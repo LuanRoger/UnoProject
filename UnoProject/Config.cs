@@ -9,11 +9,8 @@ namespace UnoProject
 {
     public static class Config
     {
-        public static void SetConfig()
-        {
-            Console.Title = $"Uno Console por Luan Roger v{GetProgramVersion()}";
-        }
+        public static void SetConfig() => Console.Title = $"Uno Console por Luan Roger v{GetProgramVersion()}";
 
-        public static Version GetProgramVersion() => Assembly.GetExecutingAssembly().GetName().Version;
+            public static Version GetProgramVersion() => Assembly.GetExecutingAssembly().GetName().Version;
     }
 }

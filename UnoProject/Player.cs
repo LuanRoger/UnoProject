@@ -21,26 +21,32 @@ namespace UnoProject
         {
             for (int t = 0 ; t != times; t++)
             {
-                hand.Add(deck.deck.First());
-                deck.deck.Remove(deck.deck.First());
+                hand.Add(deck.deck.Last());
+
+                Console.WriteLine("Você puxou:");
+                deck.deck.Last().SeeCard();
+
+                deck.deck.Remove(deck.deck.Last());
             }
         }
 
-        /// <summary>
-        /// Joga uma carta de acordo com o inedx
-        /// </summary>
-        /// <param name="cardIndex"></param>
-        /// <param name="deckNow"></param>
-        /// <returns>Retorna <c>sucesso</c></returns>
-        public bool PlayCard(int cardIndex, Deck deckNow)
+        public bool PlayCard(int cardIndex, Deck deckNow, List<Player> players, int playingNow)
         {
-            if (Verificardores.VerificarCartaParaJogar(hand[cardIndex], deckNow))
+            try
             {
-                deckNow.deckHsitory.Add(hand[cardIndex]);
-                hand.RemoveAt(cardIndex);
-                return true;
+                if (Verificardores.VerificarCartaParaJogar(hand[cardIndex], deckNow))
+                {
+                    deckNow.deckHsitory.Add(hand[cardIndex]);
+
+                    if (hand[cardIndex].isSpecial) 
+                        hand[cardIndex].ActivateEffect(hand[cardIndex], players, deckNow, playingNow);
+
+                    hand.RemoveAt(cardIndex);
+                    return true;
+                }
+                else return false;
             }
-            else return false;
+            catch { return false; }
         }
 
         private List<Card> DrawInitialCards(Deck deck)

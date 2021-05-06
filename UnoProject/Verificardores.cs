@@ -36,8 +36,9 @@ namespace UnoProject
         }
 
         public static bool VerificarCartaParaJogar(Card cardToPlay, Deck deckNow) =>
-            deckNow.deckHsitory.First().cardColor == cardToPlay.cardColor ||
-            deckNow.deckHsitory.First().number == cardToPlay.number;
+            deckNow.deckHsitory.Last().cardColor == cardToPlay.cardColor ||
+            deckNow.deckHsitory.Last().number == cardToPlay.number || 
+            cardToPlay.cardColor == CardColors.Preto;
 
         public static void VerificarVitoria(List<Player> players)
         {
