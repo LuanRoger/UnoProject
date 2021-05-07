@@ -46,7 +46,6 @@ namespace UnoProject
                     break;
                 case "Mudar cor":
                     deckNow.deckHsitory.Last().cardColor = ChangeColor();
-                    ChangeColor();
                     break;
                 case "+2":
                     PlusTowEffect(players, deckNow, playingNow);
@@ -71,7 +70,7 @@ namespace UnoProject
         private void PlusTowEffect(List<Player> players, Deck deckNow, int playingNow) => 
             players[PlayerEffected(players, playingNow)].DrawCard(deckNow, 2);
         private void PlusFourEffect(List<Player> players, Deck deckNow, int playingNow) => 
-            players[PlayerEffected(players, playingNow)].DrawCard(deckNow, 2);
+            players[PlayerEffected(players, playingNow)].DrawCard(deckNow, 4);
         private void ReverseEffect(List<Player> players) => players.Reverse();
         private int BlockEffect(List<Player> players, int playingNow) => PlayerEffected(players, playingNow) + 1;
         private CardColors ChangeColor()

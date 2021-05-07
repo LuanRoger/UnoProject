@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnoProject
 {
@@ -48,6 +46,8 @@ namespace UnoProject
                 winner.PlayerWinner();
             }
             catch { /*Nothing*/ }
+
+            if (players.Count == 1) players[0].PlayerWinner();
         }
     }
 }

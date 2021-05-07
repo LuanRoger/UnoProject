@@ -23,7 +23,7 @@ namespace UnoProject
             {
                 hand.Add(deck.deck.Last());
 
-                Console.WriteLine("Você puxou:");
+                Console.WriteLine($"{name} puxou:");
                 deck.deck.Last().SeeCard();
 
                 deck.deck.Remove(deck.deck.Last());

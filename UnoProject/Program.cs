@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace UnoProject
@@ -39,16 +38,17 @@ namespace UnoProject
             }
             #endregion
 
+            foreach (var player in players)
+            {
+                Console.WriteLine($"Cartas do {player.name}:");
+                foreach (var card in player.hand) card.SeeCard();
+                Console.WriteLine("=====================================");
+                Thread.Sleep(COOLDOWN_SLEEP0);
+            }
+
             while (players.Any(p => !p.isWinner))
             {
                 int playingNow = 0;
-                foreach (var player in players)
-                {
-                    Console.WriteLine($"Cartas do {player.name}:");
-                    foreach (var card in player.hand) card.SeeCard();
-                    Console.WriteLine("=====================================");
-                    Thread.Sleep(COOLDOWN_SLEEP0);
-                }
 
                 while (playingNow != players.Count)
                 {
@@ -58,21 +58,17 @@ namespace UnoProject
                     starderDeck.deckHsitory.Last().SeeCard();
                     Thread.Sleep(COOLDOWN_SLEEP0);
 
-                    short playerMove;
-                    while (true)
+                    short playerMove = 0;
+                    while (playerMove != 1 && playerMove != 2 && playerMove != 3 && playerMove != 4)
                     {
-                        Console.WriteLine("O que deseja fazer?");
+                        Console.WriteLine("\nO que deseja fazer?");
                         Console.WriteLine(
                             "[ 1 ] - Jogar uma carta.   [ 2 ] - Puxar carta.   [ 3 ] - Sair do jogo.   [ 4 ] - Encerrar jogo.");
-                        try
-                        {
-                            playerMove = Convert.ToInt16(Console.ReadKey().KeyChar.ToString());
-                            break;
-                        }
-                        catch { Console.WriteLine("Digite um item válido"); }
+                        try { playerMove = Convert.ToInt16(Console.ReadKey().KeyChar.ToString()); }
+                        catch { Console.WriteLine("\nDigite um item válido"); }
                     }
 
-                    Thread.Sleep(COOLDOWN_SLEEP0);
+                    Thread.Sleep(COOLDOWN_SLEEP1);
 
                     switch (playerMove)
                     {
@@ -82,18 +78,18 @@ namespace UnoProject
                                 while (true)
                                 {
                                     Console.WriteLine("\nDigite o index da carta que deseja jogar:");
-                                    Console.WriteLine("[0] - Puxar uma carta");
-                                    for (int c = 1; c != players[playingNow].hand.Count; c++)
+                                    for (int c = 0; c != players[playingNow].hand.Count; c++)
                                     {
                                         Console.Write($"[{c}] - ");
                                         players[playingNow].hand[c].SeeCard();
 
                                         Thread.Sleep(COOLDOWN_SLEEP1);
                                     }
+                                    Console.WriteLine($"[{players[playingNow].hand.Count}] - Puxar uma carta");
 
                                     try
                                     {
-                                        playerMove = Convert.ToInt16(Console.ReadKey().KeyChar.ToString());
+                                        playerMove = Convert.ToInt16(Console.ReadLine());
                                         break;
                                     }
                                     catch
@@ -102,10 +98,10 @@ namespace UnoProject
                                     }
                                 }
 
-                                if (playerMove == 0) { players[playingNow].DrawCard(starderDeck, 1); break;} 
+                                if (playerMove == players[playingNow].hand.Count) { players[playingNow].DrawCard(starderDeck, 1); break;} 
                                 else if (players[playingNow].PlayCard(playerMove, starderDeck, players, playingNow)) break;
 
-                                Console.WriteLine("Está carta não pode ser jogada.");
+                                Console.WriteLine("Esta carta não pode ser jogada.");
                             }
 
                             break;
@@ -132,7 +128,7 @@ namespace UnoProject
                             while (true)
                             {
                                 Console.WriteLine($"{players[playingNow].name}, deseja realmente sair do jogo? (S/N)");
-                                if (!Verificardores.VerificarInputChar(Console.ReadKey().KeyChar))
+                                if (Verificardores.VerificarInputChar(Console.ReadKey().KeyChar))
                                 {
                                     Console.WriteLine($"{players[playingNow].name} foi removido do jogo.");
                                     players.RemoveAt(playingNow);
