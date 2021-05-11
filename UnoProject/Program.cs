@@ -127,15 +127,15 @@ namespace UnoProject
                         case 3:
                             while (true)
                             {
-                                Console.WriteLine($"{players[playingNow].name}, deseja realmente sair do jogo? (S/N)");
+                                Console.WriteLine($"\n{players[playingNow].name}, deseja realmente sair do jogo? (S/N)");
                                 if (Verificardores.VerificarInputChar(Console.ReadKey().KeyChar))
                                 {
                                     Console.WriteLine($"{players[playingNow].name} foi removido do jogo.");
                                     players.RemoveAt(playingNow);
-                                    break;
                                 }
 
-                                Console.WriteLine("Digite um charater válido");
+                                playingNow--;
+                                break;
                             }
 
                             break;
@@ -148,7 +148,9 @@ namespace UnoProject
                     playingNow++;
                 }
             }
-            Console.WriteLine("Parabés pela vitória!");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"+=Parabés {players.First(p => p.isWinner).name} pela vitória!=+");
+            Console.ReadKey();
         }
     }
 }

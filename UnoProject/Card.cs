@@ -8,7 +8,7 @@ namespace UnoProject
     public class Card
     {
         private static readonly string[] BLACK_CARDS = {"+4", "Mudar cor"};
-        private static readonly string[] CARDS = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+2", "Reverso", "Bloqueio"};
+        private static readonly string[] CARDS = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+2", "Reverso"};
         public CardColors cardColor { get; private set; }
         public string number { get; }
         public bool isSpecial { get; }
@@ -42,7 +42,7 @@ namespace UnoProject
             {
                 case "+4":
                     PlusFourEffect(players, deckNow, playingNow);
-                    ChangeColor();
+                    deckNow.deckHsitory.Last().cardColor = ChangeColor();
                     break;
                 case "Mudar cor":
                     deckNow.deckHsitory.Last().cardColor = ChangeColor();
@@ -52,9 +52,6 @@ namespace UnoProject
                     break;
                 case "Reverso":
                     ReverseEffect(players);
-                    break;
-                case "Bloqueio":
-                    BlockEffect(players, playingNow);
                     break;
             }
         }
@@ -72,7 +69,6 @@ namespace UnoProject
         private void PlusFourEffect(List<Player> players, Deck deckNow, int playingNow) => 
             players[PlayerEffected(players, playingNow)].DrawCard(deckNow, 4);
         private void ReverseEffect(List<Player> players) => players.Reverse();
-        private int BlockEffect(List<Player> players, int playingNow) => PlayerEffected(players, playingNow) + 1;
         private CardColors ChangeColor()
         {
             int colorChoice;
@@ -97,7 +93,7 @@ namespace UnoProject
             {
                 CardColors colorPicker = (CardColors)(new Random().Next(5));
                 string cardNumber = CARDS[new Random().Next(CARDS.Length)];
-                bool isSpecial = colorPicker is CardColors.Preto || cardNumber == CARDS[10] || cardNumber == CARDS[11] || cardNumber == CARDS[12];
+                bool isSpecial = colorPicker is CardColors.Preto || cardNumber == CARDS[10] || cardNumber == CARDS[11];
 
                 cardNumber = colorPicker switch
                 {
