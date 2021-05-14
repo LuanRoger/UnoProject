@@ -1,10 +1,25 @@
-# UnoProject
- Jogo Uno feito em C# Console
+<h1 align="center">Uno Project</h1>
+<h3 align="center">Jogo Uno que funciona no terminal</h3>
 
-### Como executar
-O projeto foi criado com o .NET Core.
+### Features
+- Suporte a até 4 jogadores
+- Cartas com indentificação de cores no terminal
 
-Execute o código abaixo na pasta 'src':
-```sh
-$ dotnet run
+### Tecnologias e linguagem
+- [.NET 5](https://dotnet.microsoft.com)
+- C#
+
+### Capturas de tela
+![](https://github.com/LuanRoger/UnoProject/blob/master/UnoProject/assets/screenshots/StartGame.png)
+> Início.
+
+![](https://github.com/LuanRoger/UnoProject/blob/master/UnoProject/assets/screenshots/PlayersCards.png)
+> Cartas dos jogadores
+
+![](https://github.com/LuanRoger/UnoProject/blob/master/UnoProject/assets/screenshots/SelectCardMenu.png)
+> Selecionar carta
+
+### Como iniciar
+```powershell
+dotnet run [NOME] [NOME]...
 ```
